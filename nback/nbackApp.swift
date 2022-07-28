@@ -13,5 +13,9 @@ struct nbackApp: App {
         WindowGroup {
             ContentView()
         }
+        
+        Settings {
+            Text("SETTINGS")
+        }
     }
 }
