@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 func getKeyByType(_ type: String) -> Character {
     switch type {
@@ -32,7 +33,18 @@ struct Elements {
     var digit: String
 }
 
-func nextElements() -> Elements {
+func nextElements(_ queue: Queue?) -> Elements {
+    let repeatRate = 20
+    let fakeRepeat = 10
+    
+    func needRepeat() -> Bool {
+        return repeatRate > Int.random(in: 0..<100)
+    }
+    
+    func needFakeRepeat() -> Bool {
+        return fakeRepeat > Int.random(in: 0..<100)
+    }
+    
     let colors = [
         Color.red,
         Color.green,
@@ -52,11 +64,47 @@ func nextElements() -> Elements {
         "EllipseV",
     ]
     
-    let position = Int.random(in: 0..<9)
-    let digit = String(Int.random(in: 0..<10))
-    let color = colors[Int.random(in: 0..<colors.count)]
-    let shape = shapes[Int.random(in: 0..<shapes.count)]
-    let audio = (Int.random(in: 0..<9))
+    var position = Int.random(in: 0..<9)
+    var digit = String(Int.random(in: 0..<10))
+    var color = colors[Int.random(in: 0..<colors.count)]
+    var shape = shapes[Int.random(in: 0..<shapes.count)]
+    var audio = Int.random(in: 0..<9)
+    
+    if let second = queue?.second {
+        if queue != nil && needFakeRepeat() {
+            position = second.position
+        }
+        if queue != nil && needFakeRepeat() {
+            digit = second.digit
+        }
+        if queue != nil && needFakeRepeat() {
+            color = second.color
+        }
+        if queue != nil && needFakeRepeat() {
+            shape = second.shape
+        }
+        if queue != nil && needFakeRepeat() {
+            audio = second.audio
+        }
+    }
+    
+    if let head = queue?.head {
+        if queue != nil && needRepeat() {
+            position = head.position
+        }
+        if queue != nil && needRepeat() {
+            digit = head.digit
+        }
+        if queue != nil && needRepeat() {
+            color = head.color
+        }
+        if queue != nil && needRepeat() {
+            shape = head.shape
+        }
+        if queue != nil && needRepeat() {
+            audio = head.audio
+        }
+    }
     
     return Elements(position: position, audio: audio, color: color, shape: shape, digit: digit)
 }
@@ -73,8 +121,7 @@ struct Main: View {
     @State var currentTrial: Int = 0
     @State private var queue: Queue = Queue()
     @State private var displayed: Bool = false
-    @State private var symbolColor: Color = Color.white
-    @State private var elements: Elements = nextElements()
+    @State private var elements: Elements = nextElements(nil)
     
     var shape: String {
         if selectedModes.contains("Shape") {
@@ -92,37 +139,47 @@ struct Main: View {
         return Color.blue
     }
     
-    let timer = Timer.publish(every: 0.8, on: .main, in: .common).autoconnect()
+    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 2000.0, on: .main, in: .common).autoconnect()
+    }
+    
+    func checkCorrect(_ selectedMode: String, _ invert: Bool = false) {
+        var match = false
+        if queue.size >= level {
+            switch selectedMode {
+            case "Position":
+                match = queue.head?.position == queue.tail?.position
+            case "Audio":
+                match = queue.head?.audio == queue.tail?.audio
+            case "Color":
+                match = queue.head?.color == queue.tail?.color
+            case "Shape":
+                match = queue.head?.shape == queue.tail?.shape
+            case "Digit":
+                match = queue.head?.digit == queue.tail?.digit
+            default:
+                match = false
+            }
+            
+            if invert {
+                if match {
+                    backgroundColor = Color.red.opacity(0.5)
+                }
+            } else {
+                if match {
+                    backgroundColor = Color.green.opacity(0.5)
+                } else {
+                    backgroundColor = Color.red.opacity(0.5)
+                }
+            }
+        }
+    }
     
     var body: some View {
         ZStack {
             // Buttons for cheking matches
             ForEach(selectedModes, id: \.self) {selectedMode in
                 Button("") {
-                    var match = false
-                    if queue.size >= level {
-                        switch selectedMode {
-                        case "Position":
-                            match = queue.head?.position == queue.tail?.position
-                        case "Audio":
-                            match = queue.head?.audio == queue.tail?.audio
-                        case "Color":
-                            match = queue.head?.color == queue.tail?.color
-                        case "Shape":
-                            match = queue.head?.shape == queue.tail?.shape
-                        case "Digit":
-                            match = queue.head?.digit == queue.tail?.digit
-                        default:
-                            match = false
-                        }
-                        
-                        if match {
-                            backgroundColor = Color.green.opacity(0.5)
-                        } else {
-                            backgroundColor = Color.red.opacity(0.5)
-                        }
-                    }
-                    
+                    checkCorrect(selectedMode)
                 }.keyboardShortcut(KeyEquivalent(getKeyByType(selectedMode)), modifiers: [])
             }
             
@@ -134,7 +191,7 @@ struct Main: View {
                     ForEach(0..<9, id:\.self){index in
                         ZStack{
                             Color.white
-                            if isRunnings {
+                            if isRunnings && displayed {
                                 if elements.position == index { // If is selected position
                                     if selectedModes.contains("Position") { // TODO: default if position isn't selected
                                         switch shape {
@@ -194,7 +251,11 @@ struct Main: View {
                     if isRunnings {
                         if displayed {
                             displayed = false
-                            symbolColor = Color.white
+                            
+                            backgroundColor = .black.opacity(0.0)
+                            selectedModes.forEach {selectedMode in
+                                checkCorrect(selectedMode, true)
+                            }
                             
                             currentTrial += 1
                             if currentTrial == numberOfTrials {
@@ -203,17 +264,16 @@ struct Main: View {
                             }
                         } else {
                             displayed = true
-                            symbolColor = Color.black
                             
-                            elements = nextElements()
+                            elements = nextElements(queue)
                             
                             queue.enqueue(elements)
                             if queue.size > level + 1 {
                                 queue.drop()
                             }
+                            
+                            backgroundColor = .black.opacity(0.0)
                         }
-                        
-                        backgroundColor = .black.opacity(0.0)
                     } else {
                         currentTrial = 0
                     }

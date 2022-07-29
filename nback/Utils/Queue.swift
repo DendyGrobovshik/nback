@@ -32,6 +32,10 @@ struct Queue {
         return elements.first
     }
     
+    var second: Elements? {
+        return elements.count > 1 ? elements[1] : nil
+    }
+    
     var tail: Elements? {
         return elements.last
     }
