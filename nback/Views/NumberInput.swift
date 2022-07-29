@@ -9,6 +9,7 @@ import SwiftUI
 
 struct NumberInput: View {
     var name: String
+    var step: Int = 1
     @Binding var value: Int
     @State var scale: Int = 1
     
@@ -38,7 +39,7 @@ struct NumberInput: View {
                     .offset(x: 20)
                     .zIndex(1)
                     .onTapGesture{
-                        value -= 1
+                        value -= step
                     }
                 Text(String(value))
                     .frame(width: CGFloat(bigSize * length), height: CGFloat(bigSize))
@@ -52,7 +53,7 @@ struct NumberInput: View {
                     .cornerRadius(10)
                     .offset(x: -20)
                     .onTapGesture{
-                        value += 1
+                        value += step
                     }
             }
             .font(.system(size: CGFloat(bigSize)))

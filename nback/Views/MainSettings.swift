@@ -18,8 +18,8 @@ struct MainSettings: View {
     var body: some View {
         VStack(spacing: 50) {
             NumberInput(name: "N-back level", value: $level, scale: 2)
-                NumberInput(name: "Trial time", value: $trialTime)
-                NumberInput(name: "Number of trials", value: $numberOfTrials)
+            NumberInput(name: "Trial time", step: 100, value: $trialTime)
+            NumberInput(name: "Number of trials", value: $numberOfTrials)
         }
     }
 }
