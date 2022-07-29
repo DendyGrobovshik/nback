@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Modes: View {
     @Binding var selectedModes: [String]
-    let modes = ["Position", "Audio", "Color", "Shape", "Math"]
+    let modes = ["Position", "Audio", "Color", "Shape", "Digit"]
     
     var body: some View {
         VStack(alignment: .leading) {

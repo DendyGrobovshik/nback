@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+// PIXEL FONT:
+// SITE https://fontmeme.com/pixel-fonts/
+// FONT Font "PixelSplitter"
+// EFFECT "Style-Pokemon"
 struct CurrentMode: View {
     var currentMode: String
     

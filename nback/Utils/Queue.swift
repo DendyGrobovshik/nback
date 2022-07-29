@@ -8,13 +8,13 @@
 import Foundation
 
 struct Queue {
-    private var elements: [Int] = []
+    private var elements: [Elements] = []
     
-    mutating func enqueue(_ value: Int) {
+    mutating func enqueue(_ value: Elements) {
         elements.append(value)
     }
     
-    mutating func dequeue() -> Int? {
+    mutating func dequeue() -> Elements? {
         guard !elements.isEmpty else {
             return nil
         }
@@ -28,15 +28,11 @@ struct Queue {
         elements.removeFirst()
     }
     
-    func toString() -> String {
-        return elements.map(String.init).joined(separator: "->")
-    }
-    
-    var head: Int? {
+    var head: Elements? {
         return elements.first
     }
     
-    var tail: Int? {
+    var tail: Elements? {
         return elements.last
     }
     
