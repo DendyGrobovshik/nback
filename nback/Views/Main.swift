@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import Subsonic
 
 func getKeyByType(_ type: String) -> Character {
     switch type {
@@ -267,6 +268,10 @@ struct Main: View {
                             
                             elements = nextElements(queue)
                             
+                            if selectedModes.contains("Audio") {
+                                play(sound: "\(elements.audio).mp3")
+                            }
+                            
                             queue.enqueue(elements)
                             if queue.size > level + 1 {
                                 queue.drop()
@@ -285,6 +290,6 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape"])
+        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"])
     }
 }
