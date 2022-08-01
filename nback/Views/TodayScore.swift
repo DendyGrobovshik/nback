@@ -21,15 +21,7 @@ func gradientColor(_ score: Int) -> [Color] {
 }
 
 struct TodayScore: View {
-    var sets: [Set] = [
-        Set(mode: "2P", score: 30),
-        Set(mode: "3P", score: 65),
-        Set(mode: "4P", score: 56),
-        Set(mode: "5PA", score: 89),
-        Set(mode: "5PA", score: 69),
-        Set(mode: "3A", score: 98),
-        Set(mode: "2PA", score: 89),
-    ]
+    @Binding var scores: [Set]
     
     var rows: [GridItem] = Array(repeating: .init(.fixed(20)), count: 2)
     
@@ -38,7 +30,7 @@ struct TodayScore: View {
             Text("Latest sets:")
                 .font(.largeTitle)
                 .gradient(colors: [.teal, .pink])
-            ForEach(sets) {set in
+            ForEach(scores) {set in
                 HStack {
                     Text("\(String(set.score))%")
                         .font(.system(size: 30))
@@ -69,6 +61,14 @@ struct TodayScore: View {
 
 struct TodayScore_Previews: PreviewProvider {
     static var previews: some View {
-        TodayScore()
+        TodayScore(scores: .constant([
+            Set(mode: "2P", score: 30),
+            Set(mode: "3P", score: 65),
+            Set(mode: "4P", score: 56),
+            Set(mode: "5PA", score: 89),
+            Set(mode: "5PA", score: 69),
+            Set(mode: "3A", score: 98),
+            Set(mode: "2PA", score: 89),
+        ]))
     }
 }

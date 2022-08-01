@@ -27,7 +27,7 @@ struct CurrentMode: View {
                 ForEach(symbols, id: \.self) {symbol in
                     Image(symbol)
                         .resizable()
-                        .frame(width: 60, height: 72)
+                        .frame(width: 58, height: 70)
                         .padding(0)
                 }
             }

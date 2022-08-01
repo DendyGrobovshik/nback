@@ -9,15 +9,19 @@ import SwiftUI
 
 struct ContentView: View {
     @State var backgroundColor: Color = .black.opacity(0.0)
-    @State var selectedModes: [String] = ["Position", "Audio"]
-    @State var level: Int = 2
-    @State var trialTime: Int = 1500
-    @State var numberOfTrials: Int = 25
+    @AppStorage("SELECTED_MODES") var selectedModes: [String] = ["Position", "Audio"]
+    @AppStorage("LEVEL") var level: Int = 2
+    @AppStorage("TRIAL_TIME") var trialTime: Int = 1500
+    @AppStorage("NUMBER_OF_TRIALS") var numberOfTrials: Int = 25
+    // Дата игры
+    // Режим игры
+    // Колличество правильных и неправильных ответов по каждому из выбранных режимов
+    @State var results: [Set] = []
     
     @State var isRunning: Bool = false
     
     var currentMode: String {
-        return String(level) + selectedModes.map { $0.prefix(1) }.joined(separator: "")
+        return getCurrentMode(level, selectedModes)
     }
     
     var body: some View {
@@ -86,14 +90,14 @@ struct ContentView: View {
                     HStack {
                         MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
                             .frame(width: 350, height: 550)
-                            Main(isRunnings: $isRunning, backgroundColor: $backgroundColor, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes)
+                        Main(isRunnings: $isRunning, backgroundColor: $backgroundColor, scores: $results, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes)
                     }
                     .frame(width: 900, height: 550)
                 }
                 .frame(width: 900, height: 800)
                 VStack(spacing: 40) {
                     CurrentMode(currentMode: currentMode)
-                    TodayScore()
+                    TodayScore(scores: $results)
                     Image("go")
                         .onTapGesture {
                             isRunning = true

@@ -28,6 +28,10 @@ struct Queue {
         elements.removeFirst()
     }
     
+    mutating func clear() {
+        elements = []
+    }
+    
     var head: Elements? {
         return elements.first
     }

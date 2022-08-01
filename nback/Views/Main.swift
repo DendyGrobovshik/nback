@@ -69,7 +69,7 @@ func nextElements(_ queue: Queue?) -> Elements {
     var digit = String(Int.random(in: 0..<10))
     var color = colors[Int.random(in: 0..<colors.count)]
     var shape = shapes[Int.random(in: 0..<shapes.count)]
-    var audio = Int.random(in: 0..<9)
+    var audio = Int.random(in: 1..<9)
     
     if let second = queue?.second {
         if queue != nil && needFakeRepeat() {
@@ -114,14 +114,20 @@ func nextElements(_ queue: Queue?) -> Elements {
 struct Main: View {
     @Binding var isRunnings: Bool
     @Binding var backgroundColor: Color
+    @Binding var scores: [Set]
     var level: Int
     var trialTime: Int
     var numberOfTrials: Int
     var selectedModes: [String]
     
+    @StateObject private var sound = SubsonicPlayer(sound: "1.mp3")
+    
     @State var currentTrial: Int = 0
+    @State private var alreadyMatched: Bool = false
+    @State private var currentCorrect: Int = 0
+    @State private var currentWrong: Int = 0
     @State private var queue: Queue = Queue()
-    @State private var displayed: Bool = false
+    @State private var displayedStatus: Int = 2
     @State private var elements: Elements = nextElements(nil)
     
     var shape: String {
@@ -140,12 +146,12 @@ struct Main: View {
         return Color.blue
     }
     
-    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 2000.0, on: .main, in: .common).autoconnect()
+    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
     }
     
     func checkCorrect(_ selectedMode: String, _ invert: Bool = false) {
         var match = false
-        if queue.size >= level {
+        if queue.size > level {
             switch selectedMode {
             case "Position":
                 match = queue.head?.position == queue.tail?.position
@@ -166,6 +172,7 @@ struct Main: View {
                     backgroundColor = Color.red.opacity(0.5)
                 }
             } else {
+                alreadyMatched = true
                 if match {
                     backgroundColor = Color.green.opacity(0.5)
                 } else {
@@ -192,7 +199,7 @@ struct Main: View {
                     ForEach(0..<9, id:\.self){index in
                         ZStack{
                             Color.white
-                            if isRunnings && displayed {
+                            if isRunnings && displayedStatus < 2 {
                                 if elements.position == index { // If is selected position
                                     if selectedModes.contains("Position") { // TODO: default if position isn't selected
                                         switch shape {
@@ -233,6 +240,13 @@ struct Main: View {
                                         }
                                     }
                                     
+                                    Text("")
+                                        .onAppear{
+                                            if selectedModes.contains("Audio") {
+                                                play(sound: "\(elements.audio).mp3")
+                                            }
+                                        }
+                                    
                                     if selectedModes.contains("Digit") {
                                         Text(elements.digit)
                                             .font(.system(size: 40))
@@ -250,37 +264,48 @@ struct Main: View {
                 .frame(width: 500, height: 500)
                 .onReceive(timer) { _ in
                     if isRunnings {
-                        if displayed {
-                            displayed = false
-                            
+                        if displayedStatus == 0 {
+                            displayedStatus = 1
                             backgroundColor = .black.opacity(0.0)
-                            selectedModes.forEach {selectedMode in
-                                checkCorrect(selectedMode, true)
+                            
+                            if selectedModes.contains("Audio") {
+                                print("Playing sound for \(elements.audio)")
+//                                play(sound: "\(elements.audio).mp3")
+                            }
+                        } else if displayedStatus == 1 {
+                            displayedStatus = 2
+                            backgroundColor = .black.opacity(0.0)
+                        } else if displayedStatus == 2 {
+                            displayedStatus = 0
+                            backgroundColor = .black.opacity(0.0)
+                            
+                            if !alreadyMatched {
+                                selectedModes.forEach {selectedMode in
+                                    checkCorrect(selectedMode, true)
+                                }
                             }
                             
                             currentTrial += 1
                             if currentTrial == numberOfTrials {
                                 isRunnings = false
-                                currentTrial = 0
+                                
+                                let mode = getCurrentMode(level, selectedModes)
+                                let backsCount = currentCorrect + currentWrong
+                                let score = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
+                                scores.append(Set(mode: mode, score: score))
                             }
-                        } else {
-                            displayed = true
                             
                             elements = nextElements(queue)
-                            
-                            if selectedModes.contains("Audio") {
-                                play(sound: "\(elements.audio).mp3")
-                            }
-                            
                             queue.enqueue(elements)
                             if queue.size > level + 1 {
                                 queue.drop()
                             }
-                            
-                            backgroundColor = .black.opacity(0.0)
                         }
                     } else {
+                        queue.clear()
                         currentTrial = 0
+                        currentCorrect = 0
+                        currentWrong = 0
                     }
                 }
             }.frame(width: 550, height: 550)
@@ -290,6 +315,6 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"])
+        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"])
     }
 }
