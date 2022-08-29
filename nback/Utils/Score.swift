@@ -16,7 +16,7 @@ struct Score: Identifiable, Codable {
     let date: Date
     
     func getScore() -> Int {
-        return percent * level
+        return percent * level * selectedModes.count
     }
     
     func getMode() -> String {
