@@ -10,6 +10,15 @@ import Foundation
 struct Set: Identifiable {
     var id = UUID()
     
-    let mode: String
-    let score: Int
+    let level: Int
+    let selectedModes: [String]
+    let percent: Int
+    
+    func getScore() -> Int {
+        return percent * level
+    }
+    
+    func getMode() -> String {
+        return getCurrentMode(level, selectedModes)
+    }
 }

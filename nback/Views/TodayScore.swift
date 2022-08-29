@@ -30,24 +30,29 @@ struct TodayScore: View {
             Text("Latest sets:")
                 .font(.largeTitle)
                 .gradient(colors: [.teal, .pink])
-            ForEach(scores) {set in
+            ForEach(scores) {s in
                 HStack {
-                    Text("\(String(set.score))%")
+                    Text("\(String(s.getScore()))")
                         .font(.system(size: 30))
                         .fontWeight(.black)
+                    Spacer()
+                        .frame(maxWidth: 0)
+                    Text("(\(String(s.percent))%)")
+                        .font(.system(size: 20))
+                        .fontWeight(.black)
                         .foregroundColor(Color.black)
-                        .gradient(colors: gradientColor(set.score))
+                        .gradient(colors: gradientColor(s.percent))
                     Spacer()
-                        .frame(maxWidth: 40)
+                        .frame(maxWidth: 20)
                     Text("for")
-                        .font(.system(size: 30))
+                        .font(.system(size: 25))
                     Spacer()
-                        .frame(maxWidth: 40)
-                    Text(set.mode)
-                        .font(.system(size: 40))
+                        .frame(maxWidth: 30)
+                    Text(s.getMode())
+                        .font(.system(size: 32))
                         .foregroundColor(Color.black)
                         .gradient(colors: [.yellow, .orange])
-
+                    
                 }
                 .padding()
                 .frame(width: 300, height: 50, alignment: .leading)
@@ -62,13 +67,17 @@ struct TodayScore: View {
 struct TodayScore_Previews: PreviewProvider {
     static var previews: some View {
         TodayScore(scores: .constant([
-            Set(mode: "2P", score: 30),
-            Set(mode: "3P", score: 65),
-            Set(mode: "4P", score: 56),
-            Set(mode: "5PA", score: 89),
-            Set(mode: "5PA", score: 69),
-            Set(mode: "3A", score: 98),
-            Set(mode: "2PA", score: 89),
+            Set(level: 2, selectedModes: ["Position"], percent: 65),
+            Set(level: 3, selectedModes: ["Position", "Audio"], percent: 56),
+            Set(level: 2, selectedModes: ["Position", "Audio"], percent: 89),
+            Set(level: 5, selectedModes: ["Position"], percent: 98),
+            Set(level: 4, selectedModes: ["Position", "Audio"], percent: 77),
+            //            Set(mode: "3P", score: 65),
+            //            Set(mode: "4P", score: 56),
+            //            Set(mode: "5PA", score: 89),
+            //            Set(mode: "5PA", score: 69),
+            //            Set(mode: "3A", score: 98),
+            //            Set(mode: "2PA", score: 89),
         ]))
     }
 }

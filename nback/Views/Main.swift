@@ -35,7 +35,7 @@ struct Elements {
 }
 
 func nextElements(_ queue: Queue?) -> Elements {
-    let repeatRate = 20
+    let repeatRate = 25
     let fakeRepeat = 10
     
     func needRepeat() -> Bool {
@@ -169,13 +169,16 @@ struct Main: View {
             
             if invert {
                 if match {
+                    currentWrong += 1
                     backgroundColor = Color.red.opacity(0.5)
                 }
             } else {
                 alreadyMatched = true
                 if match {
+                    currentCorrect += 1
                     backgroundColor = Color.green.opacity(0.5)
                 } else {
+                    currentWrong += 1
                     backgroundColor = Color.red.opacity(0.5)
                 }
             }
@@ -267,11 +270,6 @@ struct Main: View {
                         if displayedStatus == 0 {
                             displayedStatus = 1
                             backgroundColor = .black.opacity(0.0)
-                            
-                            if selectedModes.contains("Audio") {
-                                print("Playing sound for \(elements.audio)")
-//                                play(sound: "\(elements.audio).mp3")
-                            }
                         } else if displayedStatus == 1 {
                             displayedStatus = 2
                             backgroundColor = .black.opacity(0.0)
@@ -280,19 +278,21 @@ struct Main: View {
                             backgroundColor = .black.opacity(0.0)
                             
                             if !alreadyMatched {
+                                //                                print("Checking size \(queue.size) head: \(queue.head?.position) tail: \(queue.tail?.position)")
                                 selectedModes.forEach {selectedMode in
                                     checkCorrect(selectedMode, true)
                                 }
                             }
                             
                             currentTrial += 1
+                            alreadyMatched = false
                             if currentTrial == numberOfTrials {
+                                print("Session ended")
                                 isRunnings = false
                                 
-                                let mode = getCurrentMode(level, selectedModes)
                                 let backsCount = currentCorrect + currentWrong
-                                let score = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
-                                scores.append(Set(mode: mode, score: score))
+                                let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
+                                scores.append(Set(level: level, selectedModes: selectedModes, percent: percent))
                             }
                             
                             elements = nextElements(queue)

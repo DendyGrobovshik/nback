@@ -16,7 +16,7 @@ struct ContentView: View {
     // Дата игры
     // Режим игры
     // Колличество правильных и неправильных ответов по каждому из выбранных режимов
-    @State var results: [Set] = []
+    @State var scores: [Set] = []
     
     @State var isRunning: Bool = false
     
@@ -90,14 +90,14 @@ struct ContentView: View {
                     HStack {
                         MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
                             .frame(width: 350, height: 550)
-                        Main(isRunnings: $isRunning, backgroundColor: $backgroundColor, scores: $results, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes)
+                        Main(isRunnings: $isRunning, backgroundColor: $backgroundColor, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes)
                     }
                     .frame(width: 900, height: 550)
                 }
                 .frame(width: 900, height: 800)
                 VStack(spacing: 40) {
                     CurrentMode(currentMode: currentMode)
-                    TodayScore(scores: $results)
+                    TodayScore(scores: $scores)
                     Image("go")
                         .onTapGesture {
                             isRunning = true
