@@ -38,7 +38,7 @@ struct TodayScore: View {
                     Spacer()
                         .frame(maxWidth: 0)
                     Text("(\(String(s.percent))%)")
-                        .font(.system(size: 20))
+                        .font(.system(size: 18))
                         .fontWeight(.black)
                         .foregroundColor(Color.black)
                         .gradient(colors: gradientColor(s.percent))

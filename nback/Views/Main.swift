@@ -9,21 +9,25 @@ import SwiftUI
 import Combine
 import Subsonic
 
-func getKeyByType(_ type: String) -> Character {
+func getKeyByType(_ type: String, _ keys: [String]) -> Character {
+    var string: String = ""
+    
     switch type {
     case "Position":
-        return "p"
+        string = keys[0]
     case "Audio":
-        return "a"
+        string = keys[1]
     case "Color":
-        return "a"
+        string = keys[2]
     case "Shape":
-        return "a"
-    case "Math":
-        return "a"
+        string = keys[3]
+    case "Digit":
+        string = keys[4]
     default:
-        return "?"
+        string = "?"
     }
+    
+    return Character(string)
 }
 
 struct Elements {
@@ -119,6 +123,7 @@ struct Main: View {
     var trialTime: Int
     var numberOfTrials: Int
     var selectedModes: [String]
+    var keys: [String]
     
     @StateObject private var sound = SubsonicPlayer(sound: "1.mp3")
     
@@ -191,7 +196,7 @@ struct Main: View {
             ForEach(selectedModes, id: \.self) {selectedMode in
                 Button("") {
                     checkCorrect(selectedMode)
-                }.keyboardShortcut(KeyEquivalent(getKeyByType(selectedMode)), modifiers: [])
+                }.keyboardShortcut(KeyEquivalent(getKeyByType(selectedMode, keys)), modifiers: [])
             }
             
             // Board
@@ -315,6 +320,6 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"])
+        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"], keys: ["a", "l", "f", "j", "d"])
     }
 }

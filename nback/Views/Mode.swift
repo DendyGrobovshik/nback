@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct Mode: View {
-    var selected: Bool
-    var name: String
+    let selected: Bool
+    let name: String
+    let key: String
     
     var body: some View {
         VStack{
@@ -20,7 +21,7 @@ struct Mode: View {
                 Color.white
             }
             
-            Text(name.prefix(1))
+            Text(key.uppercased())
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.blue)
@@ -35,6 +36,6 @@ struct Mode: View {
 
 struct Mode_Previews: PreviewProvider {
     static var previews: some View {
-        Mode(selected: true, name: "Audio")
+        Mode(selected: true, name: "Audio", key: "l")
     }
 }

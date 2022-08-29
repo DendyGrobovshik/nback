@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Modes: View {
     @Binding var selectedModes: [String]
+    let keys: [String]
     let modes = ["Position", "Audio", "Color", "Shape", "Digit"]
     
     var body: some View {
@@ -19,8 +20,8 @@ struct Modes: View {
                 .padding(5)
             
             HStack {
-                ForEach(modes, id: \.self) {mode in
-                    Mode(selected: selectedModes.contains(mode), name: mode)
+                ForEach(Array(modes.enumerated()), id: \.offset) {index, mode in
+                    Mode(selected: selectedModes.contains(mode), name: mode, key: keys[index])
                         .onTapGesture{
                             if selectedModes.contains(mode) {
                                 selectedModes = selectedModes.filter { $0 != mode }
@@ -36,6 +37,6 @@ struct Modes: View {
 
 struct Modes_Previews: PreviewProvider {
     static var previews: some View {
-        Modes(selectedModes: .constant(["Position"]))
+        Modes(selectedModes: .constant(["Position"]), keys: ["a", "l", "f", "j", "d"])
     }
 }
