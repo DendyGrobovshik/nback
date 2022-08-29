@@ -9,16 +9,26 @@ import SwiftUI
 
 @main
 struct nbackApp: App {
+    let notify = NotificationHandler()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
         .windowStyle(.hiddenTitleBar)
-
+        
         //         .windowToolbarStyle(.automatic)
         
         Settings {
-            Text("SETTINGS")
+            VStack {
+                Button("Ask permission for notification") {
+                    notify.askPermission()
+                }
+                Button("Enable everyday notifications") {
+                    notify.sendNotification()
+                }
+            }
+            .padding()
         }
     }
 }
