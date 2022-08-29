@@ -30,7 +30,7 @@ struct TodayScore: View {
             Text("Latest sets:")
                 .font(.largeTitle)
                 .gradient(colors: [.teal, .pink])
-            ForEach(scores) {s in
+            ForEach(scores.suffix(8)) {s in
                 HStack {
                     Text("\(String(s.getScore()))")
                         .font(.system(size: 30))
