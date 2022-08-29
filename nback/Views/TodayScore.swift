@@ -21,7 +21,7 @@ func gradientColor(_ score: Int) -> [Color] {
 }
 
 struct TodayScore: View {
-    @Binding var scores: [Set]
+    @Binding var scores: [Score]
     
     var rows: [GridItem] = Array(repeating: .init(.fixed(20)), count: 2)
     
@@ -67,17 +67,11 @@ struct TodayScore: View {
 struct TodayScore_Previews: PreviewProvider {
     static var previews: some View {
         TodayScore(scores: .constant([
-            Set(level: 2, selectedModes: ["Position"], percent: 65),
-            Set(level: 3, selectedModes: ["Position", "Audio"], percent: 56),
-            Set(level: 2, selectedModes: ["Position", "Audio"], percent: 89),
-            Set(level: 5, selectedModes: ["Position"], percent: 98),
-            Set(level: 4, selectedModes: ["Position", "Audio"], percent: 77),
-            //            Set(mode: "3P", score: 65),
-            //            Set(mode: "4P", score: 56),
-            //            Set(mode: "5PA", score: 89),
-            //            Set(mode: "5PA", score: 69),
-            //            Set(mode: "3A", score: 98),
-            //            Set(mode: "2PA", score: 89),
+            Score(level: 2, selectedModes: ["Position"], percent: 65, date: Date()),
+            Score(level: 3, selectedModes: ["Position", "Audio"], percent: 56, date: Date()),
+            Score(level: 2, selectedModes: ["Position", "Audio"], percent: 89, date: Date()),
+            Score(level: 5, selectedModes: ["Position"], percent: 98, date: Date()),
+            Score(level: 4, selectedModes: ["Position", "Audio"], percent: 77, date: Date()),
         ]))
     }
 }

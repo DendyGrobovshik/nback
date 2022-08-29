@@ -118,7 +118,7 @@ func nextElements(_ queue: Queue?) -> Elements {
 struct Main: View {
     @Binding var isRunnings: Bool
     @Binding var backgroundColor: Color
-    @Binding var scores: [Set]
+    @Binding var scores: [Score]
     var level: Int
     var trialTime: Int
     var numberOfTrials: Int
@@ -297,7 +297,7 @@ struct Main: View {
                                 
                                 let backsCount = currentCorrect + currentWrong
                                 let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
-                                scores.append(Set(level: level, selectedModes: selectedModes, percent: percent))
+                                scores.append(Score(level: level, selectedModes: selectedModes, percent: percent, date: Date()))
                             }
                             
                             elements = nextElements(queue)

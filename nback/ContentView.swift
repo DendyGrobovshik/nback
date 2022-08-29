@@ -14,10 +14,7 @@ struct ContentView: View {
     @AppStorage("TRIAL_TIME") var trialTime: Int = 1500
     @AppStorage("NUMBER_OF_TRIALS") var numberOfTrials: Int = 25
     @AppStorage("KEYS") var keys: [String] = ["a", "l", "c", "j", "d"]
-    // Дата игры
-    // Режим игры
-    // Колличество правильных и неправильных ответов по каждому из выбранных режимов
-    @State var scores: [Set] = []
+    @AppStorage("SCORES") var scores: [Score] = []
     
     @State var isRunning: Bool = false
     @State var isShowingHelp: Bool = false
