@@ -13,6 +13,9 @@ struct nbackApp: App {
         WindowGroup {
             ContentView()
         }
+        .windowStyle(.hiddenTitleBar)
+
+        //         .windowToolbarStyle(.automatic)
         
         Settings {
             Text("SETTINGS")

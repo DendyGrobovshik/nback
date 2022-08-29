@@ -126,7 +126,6 @@ struct ContentView: View {
                 .blur(radius: 30)
             }
         }
-        .frame(width: 1280, height: 800)
         .ignoresSafeArea()
     }
 }
