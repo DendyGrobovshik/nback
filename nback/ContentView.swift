@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State var backgroundColor: Color = .black.opacity(0.0)
+    @State var matches: [Dictionary<String, Bool>] = []
     @AppStorage("SELECTED_MODES") var selectedModes: [String] = ["Position", "Audio"]
     @AppStorage("LEVEL") var level: Int = 2
     @AppStorage("TRIAL_TIME") var trialTime: Int = 1500
@@ -74,7 +75,7 @@ struct ContentView: View {
                     .rotationEffect(.degrees(-45))
                     .offset(x: 605, y: -365)
             }
-
+            
             Text("?")
                 .font(.system(size: 40))
                 .frame(width: 50, height: 50)
@@ -92,13 +93,13 @@ struct ContentView: View {
                     isHelpAnimated = true
                 }
                 .offset(x: 620, y: -385)
-
+            
             Text("🎲")
                 .font(.system(size: 15))
                 .cornerRadius(30)
                 .onTapGesture {
                     self.level = Int.random(in: 0..<7)
-                    self.trialTime = Int(Int.random(in: 1000..<4000) / 100)
+                    self.trialTime = Int(Int.random(in: 1000..<4000) / 100) * 100
                     self.numberOfTrials = Int.random(in: 15..<50) // TODO: Is it necessry?
                     self.selectedModes = Array(["Position", "Audio", "Color", "Shape", "Digit"].choose(Int.random(in: 0..<6)))
                 }
@@ -113,13 +114,13 @@ struct ContentView: View {
                             .onAppear {
                                 isLogoAnimated = true
                             }
-                        Modes(selectedModes: $selectedModes, keys: keys)
+                        Modes(selectedModes: $selectedModes, keys: keys, matches: matches)
                     }
                     .frame(width: 900, height: 250)
                     HStack {
                         MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
                             .frame(width: 350, height: 550)
-                        Main(isRunnings: $isRunning, backgroundColor: $backgroundColor, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
+                        Main(isRunnings: $isRunning, matches: $matches, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
                     }
                     .frame(width: 900, height: 550)
                 }

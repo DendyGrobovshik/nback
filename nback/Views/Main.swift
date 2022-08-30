@@ -30,10 +30,9 @@ func getKeyByType(_ type: String, _ keys: [String]) -> Character {
     return Character(string)
 }
 
-
 struct Main: View {
     @Binding var isRunnings: Bool
-    @Binding var backgroundColor: Color
+    @Binding var matches: [Dictionary<String, Bool>]
     @Binding var scores: [Score]
     var level: Int
     var trialTime: Int
@@ -41,10 +40,7 @@ struct Main: View {
     var selectedModes: [String]
     var keys: [String]
     
-    @StateObject private var sound = SubsonicPlayer(sound: "1.mp3")
-    
     @State var currentTrial: Int = 0
-    @State private var alreadyMatched: Bool = false
     @State private var currentCorrect: Int = 0
     @State private var currentWrong: Int = 0
     @State private var queue: Queue = Queue()
@@ -67,10 +63,18 @@ struct Main: View {
         return Color.blue
     }
     
-    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
+    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()}
+    
+    func addMatch(_ mode: String, _ ok: Bool) {
+        matches[matches.count - 1][mode] = ok
     }
     
     func checkCorrect(_ selectedMode: String, _ invert: Bool = false) {
+        // If was already matched(wrong or correct)
+        if matches.last == nil || matches.last![selectedMode] != nil {
+            return
+        }
+        
         var match = false
         if queue.size > level {
             switch selectedMode {
@@ -91,16 +95,15 @@ struct Main: View {
             if invert {
                 if match {
                     currentWrong += 1
-                    backgroundColor = Color.red.opacity(0.5)
+                    addMatch(selectedMode, false)
                 }
             } else {
-                alreadyMatched = true
                 if match {
                     currentCorrect += 1
-                    backgroundColor = Color.green.opacity(0.5)
+                    addMatch(selectedMode, true)
                 } else {
                     currentWrong += 1
-                    backgroundColor = Color.red.opacity(0.5)
+                    addMatch(selectedMode, false)
                 }
             }
         }
@@ -189,27 +192,23 @@ struct Main: View {
                 .onReceive(timer) { _ in
                     if isRunnings {
                         if displayedStatus == 0 {
+                            matches.append(Dictionary())
                             displayedStatus = 1
-                            backgroundColor = .black.opacity(0.0)
                         } else if displayedStatus == 1 {
                             displayedStatus = 2
-                            backgroundColor = .black.opacity(0.0)
                         } else if displayedStatus == 2 {
                             displayedStatus = 0
-                            backgroundColor = .black.opacity(0.0)
                             
-                            if !alreadyMatched {
-                                //                                print("Checking size \(queue.size) head: \(queue.head?.position) tail: \(queue.tail?.position)")
-                                selectedModes.forEach {selectedMode in
-                                    checkCorrect(selectedMode, true)
-                                }
+                            selectedModes.forEach {selectedMode in
+                                checkCorrect(selectedMode, true)
                             }
                             
                             currentTrial += 1
-                            alreadyMatched = false
+                            
+                            
                             if currentTrial == numberOfTrials {
-                                print("Session ended")
                                 isRunnings = false
+                                matches = []
                                 
                                 let backsCount = currentCorrect + currentWrong
                                 let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
@@ -236,6 +235,6 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), backgroundColor: .constant(.black), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape", "Audio"], keys: ["a", "l", "f", "j", "d"])
+        Main(isRunnings: .constant(true), matches: .constant([]), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape"], keys: ["a", "l", "f", "j", "d"])
     }
 }

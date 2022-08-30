@@ -11,31 +11,40 @@ struct Mode: View {
     let selected: Bool
     let name: String
     let key: String
+    let matchColor: Color
     
     var body: some View {
-        VStack{
         ZStack {
-            if selected {
-                Color.yellow.opacity(0.8)
-            } else {
-                Color.white
-            }
+            matchColor
+                .cornerRadius(10)
+                .blur(radius: 10)
             
-            Text(key.uppercased())
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.blue)
-        }
-        .frame(width: 60, height: 70)
-        .cornerRadius(10)
-        .padding(10)
-        Text(name)
+            VStack{
+                ZStack {
+                    if selected {
+                        Color.yellow.opacity(0.8)
+                    } else {
+                        Color.white
+                    }
+                    
+                    Text(key.uppercased())
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.blue)
+                }
+                .frame(width: 60, height: 70)
+                .cornerRadius(10)
+                .padding(10)
+                
+                Text(name)
+            }
         }
     }
 }
 
 struct Mode_Previews: PreviewProvider {
     static var previews: some View {
-        Mode(selected: true, name: "Audio", key: "l")
+        Mode(selected: true, name: "Audio", key: "l", matchColor: .green.opacity(1))
+            .frame(width: 60, height: 120)
     }
 }
