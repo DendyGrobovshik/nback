@@ -178,7 +178,7 @@ struct Main: View {
                                         Text(elements.digit)
                                             .font(.system(size: 40))
                                             .fontWeight(.bold)
-                                            .foregroundColor(.black)
+                                            .foregroundColor(.white)
                                     }
                                 }
                             }
