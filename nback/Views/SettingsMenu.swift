@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SettingsMenu: View {
+    @Binding var sessionTime: Double
+    
     @AppStorage("IDENTIFIER") var identifier: String = ""
     @AppStorage("HOUR") var hour: Int = 21
     @AppStorage("MINUTE") var minute: Int = 30
@@ -17,6 +19,13 @@ struct SettingsMenu: View {
     
     var body: some View {
         VStack {
+            HStack {
+                Text("Session time: \(Int(sessionTime))")
+                Slider(
+                    value: $sessionTime,
+                    in: 1...60
+                )
+            }
             if identifier == "" {
                 HStack {
                     DatePicker(
@@ -63,6 +72,6 @@ struct SettingsMenu: View {
 
 struct SettingsMenu_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsMenu()
+        SettingsMenu(sessionTime: .constant(15.0))
     }
 }

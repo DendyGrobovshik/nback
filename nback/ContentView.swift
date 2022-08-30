@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    var sessionTime: Int
+    
     @State var backgroundColor: Color = .black.opacity(0.0)
     @State var matches: [Dictionary<String, Bool>] = []
     @AppStorage("SELECTED_MODES") var selectedModes: [String] = ["Position", "Audio"]
@@ -105,43 +107,46 @@ struct ContentView: View {
                 }
                 .offset(x: -637, y: 400)
             
-            HStack {
-                VStack{
-                    HStack(spacing: 60) {
-                        Logo()
-                            .scaleEffect(isLogoAnimated ? 1.1 : 1)
-                            .animation(Animation.linear(duration: 7).repeatForever(autoreverses: true), value: isLogoAnimated)
+            VStack(spacing: 0) {
+                HStack {
+                    VStack {
+                        HStack(spacing: 60) {
+                            Logo()
+                                .scaleEffect(isLogoAnimated ? 1.1 : 1)
+                                .animation(Animation.linear(duration: 7).repeatForever(autoreverses: true), value: isLogoAnimated)
+                                .onAppear {
+                                    isLogoAnimated = true
+                                }
+                            Modes(selectedModes: $selectedModes, keys: keys, matches: matches)
+                        }
+                        .frame(width: 900, height: 220)
+                        HStack {
+                            MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
+                                .frame(width: 350, height: 550)
+                            Main(isRunnings: $isRunning, matches: $matches, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
+                        }
+                        .frame(width: 900, height: 550)
+                    }
+                    .frame(width: 900, height: 800)
+                    VStack(spacing: 40) {
+                        CurrentMode(currentMode: currentMode)
+                        TodayScore(scores: $scores)
+                        Image("go")
+                            .rotationEffect(Angle(degrees: isStartButtonAnimated ? 7 : 0))
+                            .scaleEffect(isLogoAnimated ? 1.05 : 1)
+                            .animation(Animation.linear(duration: 0.3).delay(5).repeatForever(autoreverses: false), value: isStartButtonAnimated)
                             .onAppear {
-                                isLogoAnimated = true
+                                isStartButtonAnimated = true
                             }
-                        Modes(selectedModes: $selectedModes, keys: keys, matches: matches)
+                            .padding([.bottom], 5)
+                            .onTapGesture {
+                                isRunning = true
+                            }
                     }
-                    .frame(width: 900, height: 250)
-                    HStack {
-                        MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
-                            .frame(width: 350, height: 550)
-                        Main(isRunnings: $isRunning, matches: $matches, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
-                    }
-                    .frame(width: 900, height: 550)
                 }
-                .frame(width: 900, height: 800)
-                VStack(spacing: 40) {
-                    CurrentMode(currentMode: currentMode)
-                    TodayScore(scores: $scores)
-                    Image("go")
-                        .rotationEffect(Angle(degrees: isStartButtonAnimated ? 7 : 0))
-                        .scaleEffect(isLogoAnimated ? 1.05 : 1)
-                        .animation(Animation.linear(duration: 0.3).delay(5).repeatForever(autoreverses: false), value: isStartButtonAnimated)
-                        .onAppear {
-                            isStartButtonAnimated = true
-                        }
-                        .padding([.bottom], 5)
-                        .onTapGesture {
-                            isRunning = true
-                        }
-                }
+                Timeline(sessionTime: sessionTime)
+                    .offset(x: 0, y: 14)
             }
-            .frame(width: 380, height: 800)
             
             if isRunning {
                 Path { path in
@@ -164,7 +169,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(sessionTime: 15)
             .frame(width: 1300, height: 800)
     }
 }
