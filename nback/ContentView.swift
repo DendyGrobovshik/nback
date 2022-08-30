@@ -40,6 +40,7 @@ struct ContentView: View {
             
             Button("Finish"){
                 isRunning = false
+                matches = []
             }
             .keyboardShortcut(.escape, modifiers: [])
             
