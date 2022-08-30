@@ -46,35 +46,35 @@ struct ContentView: View {
                 LinearGradient(colors: [ .red.opacity(0.6), .teal.opacity(0.4), .green.opacity(0.5)], startPoint: .top, endPoint: .bottomTrailing)
             }
             
-            
-            Circle()
-                .frame(width: 400)
-                .foregroundColor(.blue.opacity(0.6))
-                .blur(radius: 50)
-                .offset(x: 440, y: -300)
-            
-            Circle()
-                .frame(width: 300)
-                .foregroundColor(.white.opacity(0.5))
-                .blur(radius: 70)
-                .offset(x: -440, y: -300)
-            
-            Ellipse()
-                .frame(width: 300)
-                .foregroundColor(.yellow.opacity(0.6))
-                .blur(radius: 80)
-                .offset(x: 100, y: 600)
-                .rotationEffect(.degrees(-45))
-            
-            Rectangle()
-                .frame(width: 300)
-                .foregroundColor(.indigo.opacity(0.7))
-                .blur(radius: 100)
-                .offset(x: -300)
-                .rotationEffect(.degrees(-45))
-            
-            
-                .offset(x: 605, y: -365)
+            Group {
+                Circle()
+                    .frame(width: 400)
+                    .foregroundColor(.blue.opacity(0.6))
+                    .blur(radius: 50)
+                    .offset(x: 440, y: -300)
+                
+                Circle()
+                    .frame(width: 300)
+                    .foregroundColor(.white.opacity(0.5))
+                    .blur(radius: 70)
+                    .offset(x: -440, y: -300)
+                
+                Ellipse()
+                    .frame(width: 300)
+                    .foregroundColor(.yellow.opacity(0.6))
+                    .blur(radius: 80)
+                    .offset(x: 100, y: 600)
+                    .rotationEffect(.degrees(-45))
+                
+                Rectangle()
+                    .frame(width: 300)
+                    .foregroundColor(.indigo.opacity(0.7))
+                    .blur(radius: 100)
+                    .offset(x: -300)
+                    .rotationEffect(.degrees(-45))
+                    .offset(x: 605, y: -365)
+            }
+
             Text("?")
                 .font(.system(size: 40))
                 .frame(width: 50, height: 50)
@@ -91,7 +91,18 @@ struct ContentView: View {
                 .onAppear {
                     isHelpAnimated = true
                 }
-                .offset(x: 605, y: -365)
+                .offset(x: 620, y: -385)
+
+            Text("🎲")
+                .font(.system(size: 15))
+                .cornerRadius(30)
+                .onTapGesture {
+                    self.level = Int.random(in: 0..<7)
+                    self.trialTime = Int(Int.random(in: 1000..<4000) / 100)
+                    self.numberOfTrials = Int.random(in: 15..<50) // TODO: Is it necessry?
+                    self.selectedModes = Array(["Position", "Audio", "Color", "Shape", "Digit"].choose(Int.random(in: 0..<6)))
+                }
+                .offset(x: -637, y: 400)
             
             HStack {
                 VStack{
