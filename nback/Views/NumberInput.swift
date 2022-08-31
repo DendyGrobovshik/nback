@@ -12,6 +12,8 @@ struct NumberInput: View {
     var step: Int = 1
     @Binding var value: Int
     @State var scale: Int = 1
+    @State private var isMinusHovered = false
+    @State private var isPlusHovered = false
     
     private var smallSize: CGFloat {
             return CGFloat(40 * scale)
@@ -36,6 +38,11 @@ struct NumberInput: View {
                     .frame(width: smallSize, height: smallSize)
                     .background(.teal.opacity(0.9))
                     .cornerRadius(10)
+                    .scaleEffect(isMinusHovered ? 1.05 : 1.0)
+                    .animation(.default, value: isMinusHovered)
+                    .onHover { isHovered in
+                        self.isMinusHovered = isHovered
+                    }
                     .offset(x: 20)
                     .zIndex(1)
                     .onTapGesture{
@@ -51,6 +58,11 @@ struct NumberInput: View {
                     .frame(width: smallSize, height: smallSize)
                     .background(.purple.opacity(0.9))
                     .cornerRadius(10)
+                    .scaleEffect(isPlusHovered ? 1.05 : 1.0)
+                    .animation(.default, value: isPlusHovered)
+                    .onHover { isHovered in
+                        self.isPlusHovered = isHovered
+                    }
                     .offset(x: -20)
                     .onTapGesture{
                         value += step

@@ -26,6 +26,9 @@ struct ContentView: View {
     @State private var isHelpAnimated = false
     @State private var isLogoAnimated = false
     @State private var isStartButtonAnimated = false
+    @State private var isSettingHovered = false
+    @State private var isHelpHovered = false
+    @State private var isRandomHovered = false
     
     var currentMode: String {
         return getCurrentMode(level, selectedModes)
@@ -95,13 +98,23 @@ struct ContentView: View {
                 .onAppear {
                     isHelpAnimated = true
                 }
+                .scaleEffect(isHelpHovered ? 1.2 : 1.0)
+                .animation(.default, value: isHelpHovered)
+                .onHover { isHovered in
+                    self.isHelpHovered = isHovered
+                }
                 .offset(x: 620, y: -385)
             
             Text("⚙️")
-                .onTapGesture{
+                .onTapGesture {
                     NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
                 }
                 .font(.system(size: 40))
+                .scaleEffect(isSettingHovered ? 1.2 : 1.0)
+                .animation(.default, value: isSettingHovered)
+                .onHover { isHovered in
+                    self.isSettingHovered = isHovered
+                }
                 .offset(x: 620, y: 385)
             
             Text("🎲")
@@ -112,6 +125,11 @@ struct ContentView: View {
                     self.trialTime = Int(Int.random(in: 1000..<4000) / 100) * 100
                     self.numberOfTrials = Int.random(in: 15..<50) // TODO: Is it necessry?
                     self.selectedModes = Array(["Position", "Audio", "Color", "Shape", "Digit"].choose(Int.random(in: 0..<6)))
+                }
+                .scaleEffect(isRandomHovered ? 1.2 : 1.0)
+                .animation(.default, value: isRandomHovered)
+                .onHover { isHovered in
+                    self.isRandomHovered = isHovered
                 }
                 .offset(x: -637, y: 400)
             
@@ -140,7 +158,7 @@ struct ContentView: View {
                         CurrentMode(currentMode: currentMode)
                         TodayScore(scores: $scores)
                         Image("go")
-                            .rotationEffect(Angle(degrees: isStartButtonAnimated ? 7 : 0))
+                            .rotationEffect(Angle(degrees: isStartButtonAnimated ? 5 : 0))
                             .scaleEffect(isStartButtonAnimated ? 1.05 : 1)
                             .animation(Animation.linear(duration: 0.3).delay(5).repeatForever(autoreverses: false), value: isStartButtonAnimated)
                             .onAppear {
