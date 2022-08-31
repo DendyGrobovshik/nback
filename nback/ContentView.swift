@@ -80,8 +80,8 @@ struct ContentView: View {
             }
             
             Text("?")
-                .font(.system(size: 40))
-                .frame(width: 50, height: 50)
+                .font(.system(size: 30))
+                .frame(width: 40, height: 40)
                 .background(.gray.opacity(0.4))
                 .cornerRadius(30)
                 .onTapGesture {
@@ -90,12 +90,19 @@ struct ContentView: View {
                 .popover(isPresented: $isShowingHelp) {
                     Help(keys: $keys)
                 }
-                .brightness(isHelpAnimated && !isRunning ? 0.2 : 0)
+                .brightness(isHelpAnimated ? 0.2 : 0)
                 .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: isHelpAnimated)
                 .onAppear {
                     isHelpAnimated = true
                 }
                 .offset(x: 620, y: -385)
+            
+            Text("⚙️")
+                .onTapGesture{
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                }
+                .font(.system(size: 40))
+                .offset(x: 620, y: 385)
             
             Text("🎲")
                 .font(.system(size: 15))
@@ -113,7 +120,7 @@ struct ContentView: View {
                     VStack {
                         HStack(spacing: 60) {
                             Logo()
-                                .scaleEffect(isLogoAnimated && !isRunning ? 1.1 : 1)
+                                .scaleEffect(isLogoAnimated ? 1.1 : 1)
                                 .animation(Animation.linear(duration: 7).repeatForever(autoreverses: true), value: isLogoAnimated)
                                 .onAppear {
                                     isLogoAnimated = true
@@ -133,8 +140,8 @@ struct ContentView: View {
                         CurrentMode(currentMode: currentMode)
                         TodayScore(scores: $scores)
                         Image("go")
-                            .rotationEffect(Angle(degrees: isStartButtonAnimated && !isRunning ? 7 : 0))
-                            .scaleEffect(isStartButtonAnimated && !isRunning ? 1.05 : 1)
+                            .rotationEffect(Angle(degrees: isStartButtonAnimated ? 7 : 0))
+                            .scaleEffect(isStartButtonAnimated ? 1.05 : 1)
                             .animation(Animation.linear(duration: 0.3).delay(5).repeatForever(autoreverses: false), value: isStartButtonAnimated)
                             .onAppear {
                                 isStartButtonAnimated = true
