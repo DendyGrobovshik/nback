@@ -18,6 +18,7 @@ struct ContentView: View {
     @AppStorage("NUMBER_OF_TRIALS") var numberOfTrials: Int = 25
     @AppStorage("KEYS") var keys: [String] = ["a", "l", "c", "j", "d"]
     @AppStorage("SCORES") var scores: [Score] = []
+    @AppStorage("FIRST_TIME") var firstTime: Bool = true
     
     @State var isRunning: Bool = false
     @State var isShowingHelp: Bool = false
@@ -28,6 +29,7 @@ struct ContentView: View {
     @State private var isStartButtonAnimated = false
     @State private var isSettingHovered = false
     @State private var isHelpHovered = false
+    @State private var isHelpPulsing = false
     @State private var isRandomHovered = false
     
     var currentMode: String {
@@ -89,6 +91,7 @@ struct ContentView: View {
                 .cornerRadius(30)
                 .onTapGesture {
                     self.isShowingHelp = true
+                    self.firstTime = false
                 }
                 .popover(isPresented: $isShowingHelp) {
                     Help(keys: $keys)
@@ -97,9 +100,15 @@ struct ContentView: View {
                 .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: isHelpAnimated)
                 .onAppear {
                     isHelpAnimated = true
+                    isHelpPulsing = true
                 }
                 .scaleEffect(isHelpHovered ? 1.2 : 1.0)
                 .animation(.default, value: isHelpHovered)
+                .if(firstTime) {view in
+                        view
+                        .scaleEffect(isHelpPulsing ? 1.3 : 1)
+                        .animation(Animation.linear(duration: 0.2).delay(0.1).repeatForever(autoreverses: true), value: isHelpPulsing)
+                }
                 .onHover { isHovered in
                     self.isHelpHovered = isHovered
                 }
@@ -177,15 +186,28 @@ struct ContentView: View {
             if isRunning {
                 Path { path in
                     path.move(to: CGPoint(x: 0, y: 0))
-                    path.addLine(to: CGPoint(x: 1280, y: 0))
-                    path.addLine(to: CGPoint(x: 1280, y: 800))
-                    path.addLine(to: CGPoint(x: 900, y: 800))
+                    path.addLine(to: CGPoint(x: 1300, y: 0))
+                    path.addLine(to: CGPoint(x: 1300, y: 850))
+                    path.addLine(to: CGPoint(x: 900, y: 850))
                     path.addLine(to: CGPoint(x: 900, y: 250))
                     path.addLine(to: CGPoint(x: 380, y: 250))
-                    path.addLine(to: CGPoint(x: 380, y: 800))
-                    path.addLine(to: CGPoint(x: 0, y: 800))
+                    path.addLine(to: CGPoint(x: 380, y: 850))
+                    path.addLine(to: CGPoint(x: 0, y: 850))
                 }
                 .fill(.black.opacity(0.8))
+                .blur(radius: 30)
+            }
+            
+            if firstTime {
+                Path { path in
+                    path.move(to: CGPoint(x: 0, y: 0))
+                    path.addLine(to: CGPoint(x: 1210, y: 0))
+                    path.addLine(to: CGPoint(x: 1230, y: 70))
+                    path.addLine(to: CGPoint(x: 1300, y: 80))
+                    path.addLine(to: CGPoint(x: 1300, y: 850))
+                    path.addLine(to: CGPoint(x: 0, y: 850))
+                }
+                .fill(.black.opacity(0.9))
                 .blur(radius: 30)
             }
         }
