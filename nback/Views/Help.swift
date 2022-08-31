@@ -50,6 +50,10 @@ struct Help: View {
         })
         
         VStack {
+            Text("SHORTCUTS")
+                .fontWeight(.heavy)
+                .foregroundColor(.purple)
+            Spacer()
             Text("Space").foregroundColor(.green) + Text(" to start")
             Text("ESC").foregroundColor(.green) + Text(" to stop")
             ForEach(0..<5, id:\.self){index in
@@ -73,9 +77,15 @@ struct Help: View {
                 .frame(width: 320)
             }
 
+            Spacer(minLength: 40)
             
-            Link("Wiki about n-back", destination: urlWiki!)
-            Link("Comprehensive article", destination: urlGwern!)
+            VStack {
+                Text("HOW TO PLAY")
+                    .fontWeight(.heavy)
+                    .foregroundColor(.purple)
+                Link("Wiki about n-back", destination: urlWiki!)
+                Link("Comprehensive article", destination: urlGwern!)
+            }
         }
         .font(.largeTitle)
         .padding()
