@@ -19,7 +19,7 @@ struct MainSettings: View {
         VStack(spacing: 50) {
             NumberInput(name: "N-back level", value: $level, scale: 2)
             NumberInput(name: "Trial time", step: 100, value: $trialTime)
-            NumberInput(name: "Number of trials", value: $numberOfTrials)
+            NumberInput(name: "Number of trials", step: 5, value: $numberOfTrials)
         }
     }
 }
