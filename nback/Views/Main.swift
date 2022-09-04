@@ -82,7 +82,7 @@ struct Main: View {
         if matchesColors[currentTrial][mode] == nil {
             matchesColors[currentTrial][mode] = ok ? .green : .red
             
-            let newTimer = Timer(timeInterval: Double(trialTime) / 4000.0, repeats: false) { newTimer in
+            let newTimer = Timer(timeInterval: Double(trialTime) / 3000.0, repeats: false) { newTimer in
                 matchesColors[currentTrial][mode] = .black.opacity(0)
             }
             RunLoop.current.add(newTimer, forMode: .common)
