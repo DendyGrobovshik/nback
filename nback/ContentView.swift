@@ -39,7 +39,10 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Button("Start"){
-                isRunning = true
+                isRunning.toggle()
+                if !isRunning {
+                    matchesColors = [Dictionary()]
+                }
             }
             .keyboardShortcut(.space, modifiers: [])
             

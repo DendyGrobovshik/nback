@@ -64,7 +64,7 @@ struct Main: View {
     }
     
     var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
-        Timer.publish(every: Double(trialTime) / 4000.0, on: .main, in: .common).autoconnect()
+        Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
     }
     
     func checkEnd() {
