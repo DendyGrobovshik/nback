@@ -64,7 +64,7 @@ struct Main: View {
     }
     
     var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
-        Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
+        Timer.publish(every: Double(trialTime) / 4000.0, on: .main, in: .common).autoconnect()
     }
     
     func checkEnd() {
@@ -82,7 +82,7 @@ struct Main: View {
         if matchesColors[currentTrial][mode] == nil {
             matchesColors[currentTrial][mode] = ok ? .green : .red
             
-            let newTimer = Timer(timeInterval: Double(trialTime) / 3000.0, repeats: false) { newTimer in
+            let newTimer = Timer(timeInterval: Double(trialTime) / 4000.0, repeats: false) { newTimer in
                 matchesColors[currentTrial][mode] = .black.opacity(0)
             }
             RunLoop.current.add(newTimer, forMode: .common)
@@ -151,6 +151,13 @@ struct Main: View {
                             Color.white
                             if isRunnings && displayedStatus < 2 {
                                 if elements.position == index { // If is selected position
+                                    Text("")
+                                        .onAppear{
+                                            if selectedModes.contains("Audio") {
+                                                play(sound: "\(elements.audio).mp3")
+                                            }
+                                        }
+                                    
                                     if selectedModes.contains("Position") { // TODO: default if position isn't selected
                                         switch shape {
                                         case "Rectangle":
@@ -190,13 +197,6 @@ struct Main: View {
                                         }
                                     }
                                     
-                                    Text("")
-                                        .onAppear{
-                                            if selectedModes.contains("Audio") {
-                                                play(sound: "\(elements.audio).mp3")
-                                            }
-                                        }
-                                    
                                     if selectedModes.contains("Digit") {
                                         Text(elements.digit)
                                             .font(.system(size: 40))
@@ -218,10 +218,12 @@ struct Main: View {
                             displayedStatus = 1
                         } else if displayedStatus == 1 {
                             displayedStatus = 2
+                        } else if displayedStatus == 2 {
+                            displayedStatus = 3
                             selectedModes.forEach {selectedMode in
                                 checkCorrect(selectedMode, true)
                             }
-                        } else if displayedStatus == 2 {
+                        } else if displayedStatus == 3 {
                             displayedStatus = 0
                             
                             currentTrial += 1
