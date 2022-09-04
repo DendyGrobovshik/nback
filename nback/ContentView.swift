@@ -11,7 +11,7 @@ struct ContentView: View {
     var sessionTime: Int
     
     @State var backgroundColor: Color = .black.opacity(0.0)
-    @State var matches: [Dictionary<String, Bool>] = []
+    @State var matchesColors: [Dictionary<String, Color>] = [Dictionary()]
     @AppStorage("SELECTED_MODES") var selectedModes: [String] = ["Position", "Audio"]
     @AppStorage("LEVEL") var level: Int = 2
     @AppStorage("TRIAL_TIME") var trialTime: Int = 1500
@@ -45,7 +45,7 @@ struct ContentView: View {
             
             Button("Finish"){
                 isRunning = false
-                matches = []
+                matchesColors = [Dictionary()]
             }
             .keyboardShortcut(.escape, modifiers: [])
             
@@ -152,13 +152,13 @@ struct ContentView: View {
                                 .onAppear {
                                     isLogoAnimated = true
                                 }
-                            Modes(selectedModes: $selectedModes, keys: keys, matches: matches)
+                            Modes(selectedModes: $selectedModes, keys: keys, matchesColors: matchesColors)
                         }
                         .frame(width: 900, height: 220)
                         HStack {
                             MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
                                 .frame(width: 350, height: 550)
-                            Main(isRunnings: $isRunning, matches: $matches, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
+                            Main(isRunnings: $isRunning, matchesColors: $matchesColors, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
                         }
                         .frame(width: 900, height: 550)
                     }

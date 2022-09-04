@@ -32,7 +32,7 @@ func getKeyByType(_ type: String, _ keys: [String]) -> Character {
 
 struct Main: View {
     @Binding var isRunnings: Bool
-    @Binding var matches: [Dictionary<String, Bool>]
+    @Binding var matchesColors: [Dictionary<String, Color>]
     @Binding var scores: [Score]
     var level: Int
     var trialTime: Int
@@ -63,15 +63,38 @@ struct Main: View {
         return Color.blue
     }
     
-    var timer: Publishers.Autoconnect<Timer.TimerPublisher> { Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()}
+    var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
+        Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
+    }
+    
+    func checkEnd() {
+        if currentTrial == numberOfTrials {
+            isRunnings = false
+            matchesColors = [Dictionary()]
+            
+            let backsCount = currentCorrect + currentWrong
+            let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
+            scores.append(Score(level: level, selectedModes: selectedModes, percent: percent, date: Date()))
+        }
+    }
     
     func addMatch(_ mode: String, _ ok: Bool) {
-        matches[matches.count - 1][mode] = ok
+        if matchesColors[currentTrial][mode] == nil {
+            matchesColors[currentTrial][mode] = ok ? .green : .red
+            
+            let newTimer = Timer(timeInterval: Double(trialTime) / 3000.0, repeats: false) { newTimer in
+                matchesColors[currentTrial][mode] = .black.opacity(0)
+            }
+            RunLoop.current.add(newTimer, forMode: .common)
+        }
     }
     
     func checkCorrect(_ selectedMode: String, _ invert: Bool = false) {
+        if queue.size < level + 1 {
+            return
+        }
         // If was already matched(wrong or correct)
-        if matches.last == nil || matches.last![selectedMode] != nil {
+        if matchesColors[currentTrial][selectedMode] != nil {
             return
         }
         
@@ -192,34 +215,24 @@ struct Main: View {
                 .onReceive(timer) { _ in
                     if isRunnings {
                         if displayedStatus == 0 {
-                            matches.append(Dictionary())
                             displayedStatus = 1
                         } else if displayedStatus == 1 {
                             displayedStatus = 2
-                        } else if displayedStatus == 2 {
-                            displayedStatus = 0
-                            
                             selectedModes.forEach {selectedMode in
                                 checkCorrect(selectedMode, true)
                             }
+                        } else if displayedStatus == 2 {
+                            displayedStatus = 0
                             
                             currentTrial += 1
-                            
-                            
-                            if currentTrial == numberOfTrials {
-                                isRunnings = false
-                                matches = []
-                                
-                                let backsCount = currentCorrect + currentWrong
-                                let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
-                                scores.append(Score(level: level, selectedModes: selectedModes, percent: percent, date: Date()))
-                            }
-                            
+                            matchesColors.append(Dictionary())
                             elements = nextElements(queue)
                             queue.enqueue(elements)
                             if queue.size > level + 1 {
                                 queue.drop()
                             }
+                            
+                            checkEnd()
                         }
                     } else {
                         queue.clear()
@@ -235,6 +248,6 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), matches: .constant([]), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape"], keys: ["a", "l", "f", "j", "d"])
+        Main(isRunnings: .constant(true), matchesColors: .constant([]), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape"], keys: ["a", "l", "f", "j", "d"])
     }
 }

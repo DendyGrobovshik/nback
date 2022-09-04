@@ -76,6 +76,9 @@ struct Help: View {
                 )
                 .frame(width: 320)
             }
+            Text("Attention, the keys depend on the keyboard language")
+                .font(.body)
+                .foregroundColor(.cyan)
 
             Spacer(minLength: 40)
             

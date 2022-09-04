@@ -10,13 +10,13 @@ import SwiftUI
 struct Modes: View {
     @Binding var selectedModes: [String]
     let keys: [String]
-    let matches: [Dictionary<String, Bool>]
+    let matchesColors: [Dictionary<String, Color>]
     let modes = ["Position", "Audio", "Color", "Shape", "Digit"]
     
     func getMatchColor(_ mode: String) -> Color {
-        if matches.count > 0 {
-            if let ok = matches.last![mode] {
-                return ok ? .green : .red
+        if matchesColors.count > 0 {
+            if let color = matchesColors.last![mode] {
+                return color
             }
         }
         
@@ -48,6 +48,6 @@ struct Modes: View {
 
 struct Modes_Previews: PreviewProvider {
     static var previews: some View {
-        Modes(selectedModes: .constant(["Position"]), keys: ["a", "l", "f", "j", "d"], matches: [])
+        Modes(selectedModes: .constant(["Position"]), keys: ["a", "l", "f", "j", "d"], matchesColors: [])
     }
 }
