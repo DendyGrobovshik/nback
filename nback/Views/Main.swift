@@ -44,7 +44,7 @@ struct Main: View {
     @State private var currentCorrect: Int = 0
     @State private var currentWrong: Int = 0
     @State private var queue: Queue = Queue()
-    @State private var displayedStatus: Int = 2
+    @State private var displayedStatus: Int = 3
     @State private var elements: Elements = nextElements(nil)
     
     var shape: String {
