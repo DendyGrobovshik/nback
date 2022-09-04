@@ -1,5 +1,6 @@
 # N-Back
 Implementation of the [n-back](https://en.wikipedia.org/wiki/N-back) game for MAC OS.
+### [Download Latest Release](https://github.com/DendyGrobovshik/nback/releases/tag/v1.0-beta)
 
 Menu
 
