@@ -7,16 +7,25 @@
 
 import SwiftUI
 
+let DEFAUL_TRIAL_TIME = 2500
+let DEFAULT_TRIALS_NUMBER = 25
+let DEFAULT_KEYS = ["a", "l", "c", "j", "d"]
+let DEFAULT_SELECTED_MODES = ["Position", "Audio"]
+let DEFAULT_LEVEL = 2
+let AVAILABLE_MODES = ["Position", "Audio", "Color", "Shape", "Digit"]
+
+let TRANSPARENT = Color.black.opacity(0.0)
+
 struct ContentView: View {
     var sessionTime: Int
     
-    @State var backgroundColor: Color = .black.opacity(0.0)
+    @State var backgroundColor: Color = TRANSPARENT
     @State var matchesColors: [Dictionary<String, Color>] = [Dictionary()]
-    @AppStorage("SELECTED_MODES") var selectedModes: [String] = ["Position", "Audio"]
-    @AppStorage("LEVEL") var level: Int = 2
-    @AppStorage("TRIAL_TIME") var trialTime: Int = 1500
-    @AppStorage("NUMBER_OF_TRIALS") var numberOfTrials: Int = 25
-    @AppStorage("KEYS") var keys: [String] = ["a", "l", "c", "j", "d"]
+    @AppStorage("SELECTED_MODES") var selectedModes: [String] = DEFAULT_SELECTED_MODES
+    @AppStorage("LEVEL") var level: Int = DEFAULT_LEVEL
+    @AppStorage("TRIAL_TIME") var trialTime: Int = DEFAUL_TRIAL_TIME
+    @AppStorage("NUMBER_OF_TRIALS") var numberOfTrials: Int = DEFAULT_TRIALS_NUMBER
+    @AppStorage("KEYS") var keys: [String] = DEFAULT_KEYS
     @AppStorage("SCORES") var scores: [Score] = []
     @AppStorage("FIRST_TIME") var firstTime: Bool = true
     
@@ -100,7 +109,11 @@ struct ContentView: View {
                     Help(keys: $keys)
                 }
                 .brightness(isHelpAnimated ? 0.2 : 0)
-                .animation(Animation.linear(duration: 2).repeatForever(autoreverses: true), value: isHelpAnimated)
+                .animation(
+                    Animation.linear(duration: 2)
+                        .repeatForever(autoreverses: true),
+                    value: isHelpAnimated
+                )
                 .onAppear {
                     isHelpAnimated = true
                     isHelpPulsing = true
@@ -110,7 +123,12 @@ struct ContentView: View {
                 .if(firstTime) {view in
                         view
                         .scaleEffect(isHelpPulsing ? 1.3 : 1)
-                        .animation(Animation.linear(duration: 0.2).delay(0.1).repeatForever(autoreverses: true), value: isHelpPulsing)
+                        .animation(
+                            Animation.linear(duration: 0.2)
+                                .delay(0.1)
+                                .repeatForever(autoreverses: true),
+                            value: isHelpPulsing
+                        )
                 }
                 .onHover { isHovered in
                     self.isHelpHovered = isHovered
@@ -119,7 +137,11 @@ struct ContentView: View {
             
             Text("⚙️")
                 .onTapGesture {
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    NSApp.sendAction(
+                        Selector(("showPreferencesWindow:")),
+                        to: nil,
+                        from: nil
+                    )
                 }
                 .font(.system(size: 40))
                 .scaleEffect(isSettingHovered ? 1.2 : 1.0)
@@ -136,7 +158,7 @@ struct ContentView: View {
                     self.level = Int.random(in: 0..<7)
                     self.trialTime = Int(Int.random(in: 1000..<4000) / 100) * 100
                     self.numberOfTrials = Int.random(in: 15..<50) // TODO: Is it necessry?
-                    self.selectedModes = Array(["Position", "Audio", "Color", "Shape", "Digit"].choose(Int.random(in: 0..<6)))
+                    self.selectedModes = Array(AVAILABLE_MODES.choose(Int.random(in: 0..<6)))
                 }
                 .scaleEffect(isRandomHovered ? 1.2 : 1.0)
                 .animation(.default, value: isRandomHovered)
@@ -151,17 +173,38 @@ struct ContentView: View {
                         HStack(spacing: 60) {
                             Logo()
                                 .scaleEffect(isLogoAnimated ? 1.1 : 1)
-                                .animation(Animation.linear(duration: 7).repeatForever(autoreverses: true), value: isLogoAnimated)
+                                .animation(
+                                    Animation.linear(duration: 7)
+                                        .repeatForever(autoreverses: true),
+                                    value: isLogoAnimated
+                                )
                                 .onAppear {
                                     isLogoAnimated = true
                                 }
-                            Modes(selectedModes: $selectedModes, keys: keys, matchesColors: matchesColors)
+                            Modes(
+                                selectedModes: $selectedModes,
+                                keys: keys,
+                                matchesColors: matchesColors
+                            )
                         }
                         .frame(width: 900, height: 220)
                         HStack {
-                            MainSettings(level: $level, trialTime: $trialTime, numberOfTrials: $numberOfTrials)
-                                .frame(width: 350, height: 550)
-                            Main(isRunnings: $isRunning, matchesColors: $matchesColors, scores: $scores, level: level, trialTime: trialTime, numberOfTrials: numberOfTrials, selectedModes: selectedModes, keys: keys)
+                            MainSettings(
+                                level: $level,
+                                trialTime: $trialTime,
+                                numberOfTrials: $numberOfTrials
+                            )
+                            .frame(width: 350, height: 550)
+                            Main(
+                                isRunnings: $isRunning,
+                                matchesColors: $matchesColors,
+                                scores: $scores,
+                                level: level,
+                                trialTime: trialTime,
+                                numberOfTrials: numberOfTrials,
+                                selectedModes: selectedModes,
+                                keys: keys
+                            )
                         }
                         .frame(width: 900, height: 550)
                     }
@@ -172,7 +215,12 @@ struct ContentView: View {
                         Image("go")
                             .rotationEffect(Angle(degrees: isStartButtonAnimated ? 5 : 0))
                             .scaleEffect(isStartButtonAnimated ? 1.05 : 1)
-                            .animation(Animation.linear(duration: 0.3).delay(5).repeatForever(autoreverses: false), value: isStartButtonAnimated)
+                            .animation(
+                                Animation.linear(duration: 0.3)
+                                    .delay(5)
+                                    .repeatForever(autoreverses: false),
+                                value: isStartButtonAnimated
+                            )
                             .onAppear {
                                 isStartButtonAnimated = true
                             }

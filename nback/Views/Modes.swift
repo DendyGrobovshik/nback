@@ -11,7 +11,7 @@ struct Modes: View {
     @Binding var selectedModes: [String]
     let keys: [String]
     let matchesColors: [Dictionary<String, Color>]
-    let modes = ["Position", "Audio", "Color", "Shape", "Digit"]
+    let modes = AVAILABLE_MODES
     
     func getMatchColor(_ mode: String) -> Color {
         if matchesColors.count > 0 {
@@ -20,7 +20,7 @@ struct Modes: View {
             }
         }
         
-        return .black.opacity(0)
+        return TRANSPARENT
     }
     
     var body: some View {
@@ -32,14 +32,18 @@ struct Modes: View {
             
             HStack {
                 ForEach(Array(modes.enumerated()), id: \.offset) {index, mode in
-                    Mode(selected: selectedModes.contains(mode), name: mode, key: keys[index], matchColor: getMatchColor(mode))
-                        .onTapGesture{
-                            if selectedModes.contains(mode) {
-                                selectedModes = selectedModes.filter { $0 != mode }
-                            } else {
-                                selectedModes.append(mode)
-                            }
+                    Mode(
+                        selected: selectedModes.contains(mode),
+                        name: mode, key: keys[index],
+                        matchColor: getMatchColor(mode)
+                    )
+                    .onTapGesture{
+                        if selectedModes.contains(mode) {
+                            selectedModes = selectedModes.filter { $0 != mode }
+                        } else {
+                            selectedModes.append(mode)
                         }
+                    }
                 }
             }
         }
@@ -48,6 +52,10 @@ struct Modes: View {
 
 struct Modes_Previews: PreviewProvider {
     static var previews: some View {
-        Modes(selectedModes: .constant(["Position"]), keys: ["a", "l", "f", "j", "d"], matchesColors: [])
+        Modes(
+            selectedModes: .constant(["Position"]),
+            keys: DEFAULT_KEYS,
+            matchesColors: []
+        )
     }
 }

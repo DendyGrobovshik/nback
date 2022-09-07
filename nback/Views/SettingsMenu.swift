@@ -13,7 +13,12 @@ struct SettingsMenu: View {
     @AppStorage("IDENTIFIER") var identifier: String = ""
     @AppStorage("HOUR") var hour: Int = 21
     @AppStorage("MINUTE") var minute: Int = 30
-    @State() var date: Date = Calendar.current.date(bySettingHour: 21, minute: 30, second: 0, of: Date())!
+    @State() var date: Date = Calendar.current.date(
+        bySettingHour: 21,
+        minute: 30,
+        second: 0,
+        of: Date()
+    )!
     
     let notify = NotificationHandler()
     
@@ -40,7 +45,11 @@ struct SettingsMenu: View {
                         identifier = UUID().uuidString
                         hour = Calendar.current.component(.hour, from: date)
                         minute = Calendar.current.component(.minute, from: date)
-                        notify.enableNotification(identifier: identifier, hour: hour, minute: minute)
+                        notify.enableNotification(
+                            identifier: identifier,
+                            hour: hour,
+                            minute: minute
+                        )
                     }
                 }
                 .font(.title3)

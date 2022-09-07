@@ -54,7 +54,7 @@ struct Help: View {
                 .fontWeight(.heavy)
                 .foregroundColor(.purple)
             Spacer()
-            Text("Space").foregroundColor(.green) + Text(" to start")
+            Text("Space").foregroundColor(.green) + Text(" to start/stop")
             Text("ESC").foregroundColor(.green) + Text(" to stop")
             ForEach(0..<5, id:\.self){index in
                 HStack {
@@ -97,6 +97,6 @@ struct Help: View {
 
 struct Help_Previews: PreviewProvider {
     static var previews: some View {
-        Help(keys: .constant(["a", "l", "f", "j", "d"]))
+        Help(keys: .constant(DEFAULT_KEYS))
     }
 }

@@ -8,6 +8,8 @@
 import SwiftUI
 import Combine
 
+let WIDTH_COEF = 1300
+
 struct Timeline: View {
     @State var currentTime: Int = 0
     var sessionTime: Int
@@ -18,14 +20,21 @@ struct Timeline: View {
     }
     
     var traversed: CGFloat {
-        CGFloat((1300 * currentTime) / (60 * sessionTime))
+        CGFloat((WIDTH_COEF * currentTime) / (60 * sessionTime))
     }
     
     var body: some View {
         ZStack(alignment: .leading) {
             Rectangle()
                 .foregroundColor(.green)
-                .frame(minWidth: 1300, idealWidth: 1300, maxWidth: 1300, minHeight: 6, idealHeight: 6, maxHeight: 6)
+                .frame(
+                    minWidth: CGFloat(WIDTH_COEF),
+                    idealWidth: CGFloat(WIDTH_COEF),
+                    maxWidth: CGFloat(WIDTH_COEF),
+                    minHeight: 6,
+                    idealHeight: 6,
+                    maxHeight: 6
+                )
                 .onReceive(timer) { _ in
                     currentTime += 1
                     
@@ -37,7 +46,14 @@ struct Timeline: View {
             
             Rectangle()
                 .foregroundColor(.red)
-                .frame(minWidth: traversed, idealWidth: traversed, maxWidth: traversed, minHeight: 6, idealHeight: 6, maxHeight: 6)
+                .frame(
+                    minWidth: traversed,
+                    idealWidth: traversed,
+                    maxWidth: traversed,
+                    minHeight: 6,
+                    idealHeight: 6,
+                    maxHeight: 6
+                )
         }
     }
 }

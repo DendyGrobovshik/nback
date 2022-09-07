@@ -16,7 +16,6 @@ extension Text {
     ) -> some View
     {
         self.overlay {
-
             LinearGradient(
                 colors: colors,
                 startPoint: startPoint,
@@ -24,7 +23,6 @@ extension Text {
             )
             .mask(
                 self
-
             )
         }
     }

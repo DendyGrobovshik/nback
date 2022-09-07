@@ -26,6 +26,10 @@ struct MainSettings: View {
 
 struct MainSettings_Previews: PreviewProvider {
     static var previews: some View {
-        MainSettings(level: .constant(2), trialTime: .constant(1500), numberOfTrials: .constant(25))
+        MainSettings(
+            level: .constant(2),
+            trialTime: .constant(1500),
+            numberOfTrials: .constant(25)
+        )
     }
 }

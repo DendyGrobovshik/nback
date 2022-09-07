@@ -9,6 +9,10 @@ import SwiftUI
 import Combine
 import Subsonic
 
+let NUMBER_OF_ACTIVE_STATES = 3
+let DEFAULT_STATE = 3
+let SECOND = 1000.0
+
 func getKeyByType(_ type: String, _ keys: [String]) -> Character {
     var string: String = ""
     
@@ -44,7 +48,7 @@ struct Main: View {
     @State private var currentCorrect: Int = 0
     @State private var currentWrong: Int = 0
     @State private var queue: Queue = Queue()
-    @State private var displayedStatus: Int = 3
+    @State private var displayedStatus: Int = DEFAULT_STATE
     @State private var elements: Elements = nextElements(nil)
     
     var shape: String {
@@ -64,7 +68,12 @@ struct Main: View {
     }
     
     var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
-        Timer.publish(every: Double(trialTime) / 3000.0, on: .main, in: .common).autoconnect()
+        let stateDuration = Double(NUMBER_OF_ACTIVE_STATES) * SECOND
+        return Timer.publish(
+            every: Double(trialTime) / stateDuration,
+            on: .main,
+            in: .common
+        ).autoconnect()
     }
     
     func checkEnd() {
@@ -73,8 +82,15 @@ struct Main: View {
             matchesColors = [Dictionary()]
             
             let backsCount = currentCorrect + currentWrong
-            let percent = backsCount == 0 ? 100 : Int(currentCorrect  * 100 / backsCount)
-            scores.append(Score(level: level, selectedModes: selectedModes, percent: percent, date: Date()))
+            let percent = backsCount == 0
+            ? 100
+            : Int(currentCorrect  * 100 / backsCount)
+            scores.append(Score(
+                level: level,
+                selectedModes: selectedModes,
+                percent: percent,
+                date: Date()
+            ))
         }
     }
     
@@ -82,8 +98,12 @@ struct Main: View {
         if matchesColors[currentTrial][mode] == nil {
             matchesColors[currentTrial][mode] = ok ? .green : .red
             
-            let newTimer = Timer(timeInterval: Double(trialTime) / 3000.0, repeats: false) { newTimer in
-                matchesColors[currentTrial][mode] = .black.opacity(0)
+            let stateDuration = Double(NUMBER_OF_ACTIVE_STATES) * SECOND
+            let newTimer = Timer(
+                timeInterval: Double(trialTime) / stateDuration,
+                repeats: false
+            ) { newTimer in
+                matchesColors[currentTrial][mode] = TRANSPARENT
             }
             RunLoop.current.add(newTimer, forMode: .common)
         }
@@ -138,7 +158,10 @@ struct Main: View {
             ForEach(selectedModes, id: \.self) {selectedMode in
                 Button("") {
                     checkCorrect(selectedMode)
-                }.keyboardShortcut(KeyEquivalent(getKeyByType(selectedMode, keys)), modifiers: [])
+                }.keyboardShortcut(
+                    KeyEquivalent(getKeyByType(selectedMode, keys)),
+                    modifiers: []
+                )
             }
             
             // Board
@@ -150,7 +173,7 @@ struct Main: View {
                         ZStack{
                             Color.white
                             if isRunnings && displayedStatus < 2 {
-                                if elements.position == index { // If is selected position
+                                if elements.position == index { // If it is selected position
                                     Text("")
                                         .onAppear{
                                             if selectedModes.contains("Audio") {
@@ -250,6 +273,15 @@ struct Main: View {
 
 struct Main_Previews: PreviewProvider {
     static var previews: some View {
-        Main(isRunnings: .constant(true), matchesColors: .constant([]), scores: .constant([]), level: 2, trialTime: 1500, numberOfTrials: 25, selectedModes: ["Position", "Digit", "Color", "Shape"], keys: ["a", "l", "f", "j", "d"])
+        Main(
+            isRunnings: .constant(true),
+            matchesColors: .constant([]),
+            scores: .constant([]),
+            level: 2,
+            trialTime: 1500,
+            numberOfTrials: 25,
+            selectedModes: ["Position", "Digit", "Color", "Shape"],
+            keys: ["a", "l", "f", "j", "d"]
+        )
     }
 }

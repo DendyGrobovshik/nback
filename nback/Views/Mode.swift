@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let SELECTED_COLOR = Color.yellow.opacity(0.8)
+
 struct Mode: View {
     let selected: Bool
     let name: String
@@ -22,7 +24,7 @@ struct Mode: View {
             VStack{
                 ZStack {
                     if selected {
-                        Color.yellow.opacity(0.8)
+                        SELECTED_COLOR
                     } else {
                         Color.white
                     }
@@ -44,7 +46,12 @@ struct Mode: View {
 
 struct Mode_Previews: PreviewProvider {
     static var previews: some View {
-        Mode(selected: true, name: "Audio", key: "l", matchColor: .green.opacity(1))
-            .frame(width: 60, height: 120)
+        Mode(
+            selected: true,
+            name: "Audio",
+            key: "l",
+            matchColor: .green.opacity(1)
+        )
+        .frame(width: 60, height: 120)
     }
 }

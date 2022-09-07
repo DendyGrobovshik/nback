@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let LINES_TO_DISPLAY = 8
+
 func gradientColor(_ score: Int) -> [Color] {
     switch score {
     case _ where score < 50:
@@ -30,7 +32,7 @@ struct TodayScore: View {
             Text("Latest sets:")
                 .font(.largeTitle)
                 .gradient(colors: [.teal, .pink])
-            ForEach(scores.suffix(8)) {s in
+            ForEach(scores.suffix(LINES_TO_DISPLAY)) {s in
                 HStack {
                     Text("\(String(s.getScore()))")
                         .font(.system(size: 30))
@@ -56,7 +58,12 @@ struct TodayScore: View {
                 }
                 .padding()
                 .frame(width: 300, height: 50, alignment: .leading)
-                .background(LinearGradient(colors: [.blue.opacity(0.6), .indigo.opacity(0.6)], startPoint: .topLeading, endPoint: .bottom))
+                .background(
+                    LinearGradient(
+                        colors: [.blue.opacity(0.6), .indigo.opacity(0.6)],
+                        startPoint: .topLeading,
+                        endPoint: .bottom)
+                )
                 .cornerRadius(20)
             }
         }

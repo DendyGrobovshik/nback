@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Todo:
 struct WeekScore: View {
     var body: some View {
         Text("Статистика по дням")
