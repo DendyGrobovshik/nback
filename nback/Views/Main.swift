@@ -50,6 +50,7 @@ struct Main: View {
     @State private var queue: Queue = Queue()
     @State private var displayedStatus: Int = DEFAULT_STATE
     @State private var elements: Elements = nextElements(nil)
+    @State private var sound = SubsonicPlayer(sound: "")
     
     var shape: String {
         if selectedModes.contains("Shape") {
@@ -177,7 +178,7 @@ struct Main: View {
                                     Text("")
                                         .onAppear{
                                             if selectedModes.contains("Audio") {
-                                                play(sound: "\(elements.audio).mp3")
+                                                sound.play()
                                             }
                                         }
                                     
@@ -252,6 +253,7 @@ struct Main: View {
                             currentTrial += 1
                             matchesColors.append(Dictionary())
                             elements = nextElements(queue)
+                            sound = SubsonicPlayer(sound: "\(elements.audio).mp3")
                             queue.enqueue(elements)
                             if queue.size > level + 1 {
                                 queue.drop()

@@ -16,14 +16,12 @@
 		F379D105288FDE520046D08B /* Logo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D104288FDE520046D08B /* Logo.swift */; };
 		F379D10B288FE01E0046D08B /* Mode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D10A288FE01E0046D08B /* Mode.swift */; };
 		F379D10D288FE5D40046D08B /* MainSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D10C288FE5D40046D08B /* MainSettings.swift */; };
-		F379D111288FE7480046D08B /* Level.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D110288FE7480046D08B /* Level.swift */; };
 		F379D117289146B10046D08B /* TodayScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D116289146B10046D08B /* TodayScore.swift */; };
 		F379D119289146D10046D08B /* WeekScore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D118289146D10046D08B /* WeekScore.swift */; };
 		F379D11B2892A4220046D08B /* CurrentMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D11A2892A4220046D08B /* CurrentMode.swift */; };
 		F379D11D2892A5B00046D08B /* Score.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D11C2892A5B00046D08B /* Score.swift */; };
 		F379D11F2892BF3B0046D08B /* NumberInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D11E2892BF3B0046D08B /* NumberInput.swift */; };
 		F379D1212892C9FF0046D08B /* TextGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F379D1202892C9FF0046D08B /* TextGradient.swift */; };
-		F379D12428966EBA0046D08B /* Subsonic in Frameworks */ = {isa = PBXBuildFile; productRef = F379D12328966EBA0046D08B /* Subsonic */; };
 		F379D131289671930046D08B /* 3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F379D128289671930046D08B /* 3.mp3 */; };
 		F379D132289671930046D08B /* 7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F379D129289671930046D08B /* 7.mp3 */; };
 		F379D133289671930046D08B /* 5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F379D12A289671930046D08B /* 5.mp3 */; };
@@ -42,9 +40,8 @@
 		F3E8B1782888477B00C57E94 /* nbackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B1772888477B00C57E94 /* nbackTests.swift */; };
 		F3E8B1822888477B00C57E94 /* nbackUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B1812888477B00C57E94 /* nbackUITests.swift */; };
 		F3E8B1842888477B00C57E94 /* nbackUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B1832888477B00C57E94 /* nbackUITestsLaunchTests.swift */; };
-		F3E8B196288A821600C57E94 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B195288A821600C57E94 /* Sidebar.swift */; };
-		F3E8B19A288A836B00C57E94 /* SentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B199288A836B00C57E94 /* SentView.swift */; };
 		F3E8B1D9288AB4E200C57E94 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E8B1D8288AB4E200C57E94 /* Main.swift */; };
+		F3ECCA6628D3B1870087412F /* Subsonic in Frameworks */ = {isa = PBXBuildFile; productRef = F3ECCA6528D3B1870087412F /* Subsonic */; };
 		F3F0545128BCFEFB0046B10D /* NotificationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F0545028BCFEFB0046B10D /* NotificationHandler.swift */; };
 /* End PBXBuildFile section */
 
@@ -75,7 +72,6 @@
 		F379D104288FDE520046D08B /* Logo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logo.swift; sourceTree = "<group>"; };
 		F379D10A288FE01E0046D08B /* Mode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mode.swift; sourceTree = "<group>"; };
 		F379D10C288FE5D40046D08B /* MainSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettings.swift; sourceTree = "<group>"; };
-		F379D110288FE7480046D08B /* Level.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level.swift; sourceTree = "<group>"; };
 		F379D116289146B10046D08B /* TodayScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayScore.swift; sourceTree = "<group>"; };
 		F379D118289146D10046D08B /* WeekScore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekScore.swift; sourceTree = "<group>"; };
 		F379D11A2892A4220046D08B /* CurrentMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMode.swift; sourceTree = "<group>"; };
@@ -104,8 +100,6 @@
 		F3E8B17D2888477B00C57E94 /* nbackUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = nbackUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3E8B1812888477B00C57E94 /* nbackUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nbackUITests.swift; sourceTree = "<group>"; };
 		F3E8B1832888477B00C57E94 /* nbackUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nbackUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F3E8B195288A821600C57E94 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
-		F3E8B199288A836B00C57E94 /* SentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentView.swift; sourceTree = "<group>"; };
 		F3E8B1D8288AB4E200C57E94 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		F3F0545028BCFEFB0046B10D /* NotificationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,7 +109,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F379D12428966EBA0046D08B /* Subsonic in Frameworks */,
+				F3ECCA6628D3B1870087412F /* Subsonic in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +167,7 @@
 				F3E8B1762888477B00C57E94 /* nbackTests */,
 				F3E8B1802888477B00C57E94 /* nbackUITests */,
 				F3E8B1632888477900C57E94 /* Products */,
+				F3ECCA6428D3B1870087412F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -191,7 +186,6 @@
 			children = (
 				F379D127289670860046D08B /* sounds */,
 				F379D0F6288D45810046D08B /* Utils */,
-				F3E8B191288A4E7B00C57E94 /* Models */,
 				F3E8B1902888478D00C57E94 /* Views */,
 				F3E8B1652888477900C57E94 /* nbackApp.swift */,
 				F3E8B1672888477900C57E94 /* ContentView.swift */,
@@ -230,14 +224,11 @@
 		F3E8B1902888478D00C57E94 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F3E8B195288A821600C57E94 /* Sidebar.swift */,
-				F3E8B199288A836B00C57E94 /* SentView.swift */,
 				F3E8B1D8288AB4E200C57E94 /* Main.swift */,
 				F379D102288FDE340046D08B /* Modes.swift */,
 				F379D104288FDE520046D08B /* Logo.swift */,
 				F379D10A288FE01E0046D08B /* Mode.swift */,
 				F379D10C288FE5D40046D08B /* MainSettings.swift */,
-				F379D110288FE7480046D08B /* Level.swift */,
 				F379D118289146D10046D08B /* WeekScore.swift */,
 				F379D116289146B10046D08B /* TodayScore.swift */,
 				F379D11A2892A4220046D08B /* CurrentMode.swift */,
@@ -249,11 +240,11 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F3E8B191288A4E7B00C57E94 /* Models */ = {
+		F3ECCA6428D3B1870087412F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = Models;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -273,7 +264,7 @@
 			);
 			name = nback;
 			packageProductDependencies = (
-				F379D12328966EBA0046D08B /* Subsonic */,
+				F3ECCA6528D3B1870087412F /* Subsonic */,
 			);
 			productName = nback;
 			productReference = F3E8B1622888477900C57E94 /* nback.app */;
@@ -323,7 +314,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					F3E8B1612888477900C57E94 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -405,13 +396,10 @@
 				F379D10D288FE5D40046D08B /* MainSettings.swift in Sources */,
 				F379D10B288FE01E0046D08B /* Mode.swift in Sources */,
 				F3F0545128BCFEFB0046B10D /* NotificationHandler.swift in Sources */,
-				F379D111288FE7480046D08B /* Level.swift in Sources */,
-				F3E8B196288A821600C57E94 /* Sidebar.swift in Sources */,
 				F379D0F8288D459A0046D08B /* Queue.swift in Sources */,
 				F379D13B289676D70046D08B /* RawRepresentable.swift in Sources */,
 				F3E8B1662888477900C57E94 /* nbackApp.swift in Sources */,
 				F33C5B1E28BE685100E021C3 /* Timeline.swift in Sources */,
-				F3E8B19A288A836B00C57E94 /* SentView.swift in Sources */,
 				F379D1212892C9FF0046D08B /* TextGradient.swift in Sources */,
 				F379D117289146B10046D08B /* TodayScore.swift in Sources */,
 				F379D11F2892BF3B0046D08B /* NumberInput.swift in Sources */,
@@ -494,6 +482,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -554,6 +543,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -580,12 +570,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = nback/nback.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nback/Preview Content\"";
-				DEVELOPMENT_TEAM = 2AHTM8636Q;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
@@ -608,12 +599,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = nback/nback.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"nback/Preview Content\"";
-				DEVELOPMENT_TEAM = 2AHTM8636Q;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.puzzle-games";
@@ -637,6 +629,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
@@ -655,6 +648,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.3;
 				MARKETING_VERSION = 1.0;
@@ -672,6 +666,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = teamdegro.nbackUITests;
@@ -688,6 +683,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = teamdegro.nbackUITests;
@@ -751,7 +747,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		F379D12328966EBA0046D08B /* Subsonic */ = {
+		F3ECCA6528D3B1870087412F /* Subsonic */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F379D12228966EBA0046D08B /* XCRemoteSwiftPackageReference "Subsonic" */;
 			productName = Subsonic;
